@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <h3 class="title">OJ</h3>
       <el-form-item prop="username">
         <el-input
           v-model="loginForm.username"
@@ -139,9 +139,9 @@ function handleLogin() {
 
 function getCode() {
   getCodeImg().then(res => {
-    captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled;
+    // captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled;
     if (captchaEnabled.value) {
-      codeUrl.value = "data:image/gif;base64," + res.img;
+      codeUrl.value = "data:image/gif;base64," + res.data;
       loginForm.value.uuid = res.uuid;
     }
   });
@@ -200,7 +200,7 @@ getCookie();
   color: #bfbfbf;
 }
 .login-code {
-  width: 33%;
+  width: 15%;
   height: 40px;
   float: right;
   img {
