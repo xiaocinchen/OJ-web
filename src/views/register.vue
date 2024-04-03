@@ -1,14 +1,47 @@
 <template>
   <div class="register">
     <el-form ref="registerRef" :model="registerForm" :rules="registerRules" class="register-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <h3 class="title">OJ</h3>
       <el-form-item prop="username">
         <el-input 
           v-model="registerForm.username" 
           type="text" 
           size="large" 
           auto-complete="off" 
-          placeholder="账号"
+          placeholder="Username"
+        >
+          <template #prefix><svg-icon icon-class="user" class="el-input__icon input-icon" /></template>
+        </el-input>
+      </el-form-item>
+      <el-form-item prop="email">
+        <el-input
+            v-model="registerForm.email"
+            type="text"
+            size="large"
+            auto-complete="off"
+            placeholder="Email"
+        >
+          <template #prefix><svg-icon icon-class="user" class="el-input__icon input-icon" /></template>
+        </el-input>
+      </el-form-item>
+      <el-form-item prop="firstName">
+        <el-input
+            v-model="registerForm.firstName"
+            type="text"
+            size="large"
+            auto-complete="off"
+            placeholder="FirstName"
+        >
+          <template #prefix><svg-icon icon-class="user" class="el-input__icon input-icon" /></template>
+        </el-input>
+      </el-form-item>
+      <el-form-item prop="lastName">
+        <el-input
+            v-model="registerForm.lastName"
+            type="text"
+            size="large"
+            auto-complete="off"
+            placeholder="LastName"
         >
           <template #prefix><svg-icon icon-class="user" class="el-input__icon input-icon" /></template>
         </el-input>
@@ -19,7 +52,7 @@
           type="password"
           size="large" 
           auto-complete="off"
-          placeholder="密码"
+          placeholder="password"
           @keyup.enter="handleRegister"
         >
           <template #prefix><svg-icon icon-class="password" class="el-input__icon input-icon" /></template>
@@ -31,7 +64,7 @@
           type="password"
           size="large" 
           auto-complete="off"
-          placeholder="确认密码"
+          placeholder="confirmPassword"
           @keyup.enter="handleRegister"
         >
           <template #prefix><svg-icon icon-class="password" class="el-input__icon input-icon" /></template>
@@ -42,7 +75,7 @@
           size="large" 
           v-model="registerForm.code"
           auto-complete="off"
-          placeholder="验证码"
+          placeholder="code"
           style="width: 63%"
           @keyup.enter="handleRegister"
         >
@@ -84,6 +117,10 @@ const { proxy } = getCurrentInstance();
 
 const registerForm = ref({
   username: "",
+  email:"",
+  firstName:"",
+  lastName:"",
+  gender:"",
   password: "",
   confirmPassword: "",
   code: "",
@@ -101,11 +138,11 @@ const equalToPassword = (rule, value, callback) => {
 const registerRules = {
   username: [
     { required: true, trigger: "blur", message: "请输入您的账号" },
-    { min: 2, max: 20, message: "用户账号长度必须介于 2 和 20 之间", trigger: "blur" }
+    { min: 6, max: 20, message: "用户账号长度必须介于 2 和 20 之间", trigger: "blur" }
   ],
   password: [
     { required: true, trigger: "blur", message: "请输入您的密码" },
-    { min: 5, max: 20, message: "用户密码长度必须介于 5 和 20 之间", trigger: "blur" },
+    { min: 8, max: 20, message: "用户密码长度必须介于 5 和 20 之间", trigger: "blur" },
     { pattern: /^[^<>"'|\\]+$/, message: "不能包含非法字符：< > \" ' \\\ |", trigger: "blur" }
   ],
   confirmPassword: [
@@ -143,10 +180,10 @@ function handleRegister() {
 
 function getCode() {
   getCodeImg().then(res => {
-    captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled;
+    // captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled;
     if (captchaEnabled.value) {
-      codeUrl.value = "data:image/gif;base64," + res.img;
-      registerForm.value.uuid = res.uuid;
+      codeUrl.value = "data:image/gif;base64," + res.data.img;;
+      registerForm.value.uuid = res.data.uuid;
     }
   });
 }
@@ -213,7 +250,7 @@ getCode();
   letter-spacing: 1px;
 }
 .register-code-img {
-  height: 40px;
+  height: 32px;
   padding-left: 12px;
 }
 </style>

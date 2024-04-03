@@ -1,6 +1,7 @@
 import { login, logout, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import defAva from '@/assets/images/profile.jpg'
+import {ElMessage} from "element-plus";
 
 const useUserStore = defineStore(
   'user',
@@ -22,6 +23,10 @@ const useUserStore = defineStore(
         const uuid = userInfo.uuid
         return new Promise((resolve, reject) => {
           login(username, password, code, uuid).then(res => {
+            if (res.code < 0){
+              ElMessage({ message: res.message, type: 'warning' })
+              reject(new Error(res.message));
+            }
             setToken(res.token)
             this.token = res.token
             resolve()
