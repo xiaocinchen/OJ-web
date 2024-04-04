@@ -76,10 +76,15 @@ service.interceptors.response.use(res => {
     // 未设置状态码则默认成功状态
     const code = res.status || 200;
     // 获取错误信息
-    const msg = errorCode[code] || res.data.msg || errorCode['default']
+    const msg = errorCode[code] || res.data.message || errorCode['default']
     // 二进制数据则直接返回
     if (res.request.responseType ===  'blob' || res.request.responseType ===  'arraybuffer') {
       return res.data
+    }
+    console.log(res)
+    if (res.data.code < 0){
+      ElMessage({ message: msg, type: 'error' })
+      return Promise.reject(new Error(msg))
     }
     if (code === 401) {
       if (!isRelogin.show) {

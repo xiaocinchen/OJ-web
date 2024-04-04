@@ -21,8 +21,18 @@
             auto-complete="off"
             placeholder="Email"
         >
-          <template #prefix><svg-icon icon-class="user" class="el-input__icon input-icon" /></template>
+          <template #prefix><svg-icon icon-class="email" class="el-input__icon input-icon" /></template>
         </el-input>
+      </el-form-item>
+      <el-form-item prop="gender">
+            <el-select v-model="registerForm.gender"  size="large" >
+              <template #prefix>
+                <svg-icon icon-class="build" class="el-input__icon input-icon" />
+              </template>
+              <el-option label="male" value="male"></el-option>
+              <el-option label="female" value="female"></el-option>
+              <el-option label="secret" value="secret"></el-option>
+            </el-select>
       </el-form-item>
       <el-form-item prop="firstName">
         <el-input
@@ -138,11 +148,11 @@ const equalToPassword = (rule, value, callback) => {
 const registerRules = {
   username: [
     { required: true, trigger: "blur", message: "请输入您的账号" },
-    { min: 6, max: 20, message: "用户账号长度必须介于 2 和 20 之间", trigger: "blur" }
+    { min: 6, max: 20, message: "用户账号长度必须介于 6 和 20 之间", trigger: "blur" }
   ],
   password: [
     { required: true, trigger: "blur", message: "请输入您的密码" },
-    { min: 8, max: 20, message: "用户密码长度必须介于 5 和 20 之间", trigger: "blur" },
+    { min: 8, max: 20, message: "用户密码长度必须介于 8 和 20 之间", trigger: "blur" },
     { pattern: /^[^<>"'|\\]+$/, message: "不能包含非法字符：< > \" ' \\\ |", trigger: "blur" }
   ],
   confirmPassword: [
@@ -214,6 +224,13 @@ getCode();
   .el-input {
     height: 40px;
     input {
+      height: 40px;
+    }
+  }
+  .el-select {
+    height: 40px;
+    width: 350px;
+    .el-option {
       height: 40px;
     }
   }
