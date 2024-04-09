@@ -58,3 +58,16 @@ export function getCodeImg() {
     timeout: 20000
   })
 }
+
+
+// 验证邮箱验证码
+export function verifyEmailCode() {
+  return request({
+    url: '/register/verify',
+    headers: {
+      isToken: false
+    },
+    method: 'post',
+    timeout: 20000
+  })
+}

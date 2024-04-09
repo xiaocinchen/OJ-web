@@ -44,7 +44,18 @@ import TreeSelect from '@/components/TreeSelect'
 // 字典标签组件
 import DictTag from '@/components/DictTag'
 
+import uviewPlus from 'uview-plus'
+
 const app = createApp(App)
+
+import { createSSRApp } from 'vue'
+export function createApp() {
+  const app = createSSRApp(App)
+  app.use(uviewPlus)
+  return {
+    app
+  }
+}
 
 // 全局方法挂载
 app.config.globalProperties.useDict = useDict

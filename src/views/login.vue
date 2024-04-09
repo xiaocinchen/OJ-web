@@ -94,7 +94,7 @@ const loading = ref(false);
 // 验证码开关
 const captchaEnabled = ref(true);
 // 注册开关
-const register = ref(false);
+const register = ref(true);
 const redirect = ref(undefined);
 
 watch(route, (newRoute) => {
@@ -141,6 +141,7 @@ function getCode() {
   getCodeImg().then(res => {
     // captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled;
     if (captchaEnabled.value) {
+      console.log(res)
       codeUrl.value = "data:image/gif;base64," + res.data.img;
       loginForm.value.uuid = res.data.uuid;
     }

@@ -82,10 +82,6 @@ service.interceptors.response.use(res => {
       return res.data
     }
     console.log(res)
-    if (res.data.code < 0){
-      ElMessage({ message: msg, type: 'error' })
-      return Promise.reject(new Error(msg))
-    }
     if (code === 401) {
       if (!isRelogin.show) {
         isRelogin.show = true;
@@ -108,8 +104,11 @@ service.interceptors.response.use(res => {
     } else if (code !== 200) {
       ElNotification.error({ title: msg })
       return Promise.reject('error')
+    } else if (res.data.code < 0) {
+      ElMessage({message: msg, type: 'error'})
+      return Promise.reject(new Error(msg))
     } else {
-      return  Promise.resolve(res.data)
+      return Promise.resolve(res.data)
     }
   },
   error => {
